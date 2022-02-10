@@ -40,20 +40,24 @@ def sign_up():
     if request.method == "POST":
         email = request.form.get('email')
         pass1 = request.form.get('password')
-        pass1 = request.form.get('password_retype')
-
+        pass2 = request.form.get('password_retype')
+        print(pass1)
+        print(pass2)
 
         # całe sprawdzanie poprawności tu wbić
 
+
         user = User.query.filter_by(email=email).first()
-        if user:
+        if email == '' or pass1 == '' or pass2 == '':
+            flash("Fill all the forms")
+        elif user:
             flash("Email already exists", category='error')
+        elif pass1 != pass2:
+            flash("Passwords don\'t match", category='error')
         else:
             new_user = User(email=email, password=generate_password_hash(pass1, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
-            login_user(new_user, remember=True)
             flash('Account created!', category='success')
-            return redirect(url_for('views.home'))
 
     return render_template("signup.html", user=current_user)

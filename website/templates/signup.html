@@ -60,7 +60,7 @@
                     <div class="sign-element">Powtórz hasło</div>
 
                     <div class="sign-element sign-form">
-                        <input name="password-retype"
+                        <input name="password_retype"
                         type="password"
                         class="sign-form-control"
                         id="password_retype"
@@ -80,6 +80,17 @@
                         value="Zarejestruj">
                 </form>
             </div>
+
+            {% with messages = get_flashed_messages() %} 
+                {% if messages %}
+                    {% for message in messages %}
+                        <div>
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %} 
+            {% endwith %}
+
         </div>
     </div>
 </body>
