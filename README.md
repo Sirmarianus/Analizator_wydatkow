@@ -1,0 +1,1 @@
+# Analizator_wydatkow
