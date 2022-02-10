@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+    <title>Wydatki – Zaloguj</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Analiza i prezentacja codziennych wydatków">
+    <meta name="author" content="Marek Kwak, Piotr Węgrzyn">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <div class="sign-body">
+
+        <div class="sign-header">
+            <div>
+                <h1 class="sign-title">
+                    Wydatki
+                </h1>
+        
+                <h3 class="sign-subtitle">
+                    Analizuj i Oszczędzaj
+                </h3>
+            </div>
+        </div>
+    
+        <div class="sign-main">
+            <div class="sign-container">
+                <form action='/login' method='POST'>
+                    
+                    <div class="sign-tab-container sign-in-tab-container">
+                        <div class="sign-tab sign-tab-current">Zaloguj się</div>
+                        <a href="/signup">
+                            <div class="sign-tab sign-tab-alter">Zarejestruj się</div>
+                        </a>
+                    </div>
+
+                    <div class="sign-element sign-element">Adres email</div>
+
+                    <div class="sign-element sign-form">
+                        <input name="email" 
+                            type="email" 
+                            class="sign-form-control" 
+                            id="email" 
+                            placeholder="nazwa@example.com">
+                    </div>
+        
+                    <div class="sign-element">Hasło</div>
+        
+                    <div class="sign-element sign-form">
+                        <input name="password" 
+                            type="password" 
+                            class="sign-form-control" 
+                            id="password" 
+                            placeholder="Hasło">
+                    </div>
+
+                    <input class="sign-element sign-button" 
+                        type="submit" 
+                        value="Zaloguj">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

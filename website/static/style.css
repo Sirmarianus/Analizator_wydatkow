@@ -1,0 +1,356 @@
+html {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: violet;
+}
+
+body {
+    margin: 0;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    text-decoration-line: none;
+}
+
+/* Sign in/ Sign up CSS */
+
+.sign-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-row: 1fr;
+    grid-template-areas: "leftarea rightarea";
+    min-height: 100vh;
+}
+
+.sign-header {
+    display: grid;
+    color: white;
+    grid-area: leftarea;
+    background-color: #f46524;
+    min-height: 100vh;
+    place-items: center;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    .sign-body {
+        display: grid;
+        grid-template-rows: 1fr auto;
+        grid-template-columns: unset;
+        grid-template-areas: "leftarea" "rightarea";
+        min-height: unset;
+    }
+    .sign-header {
+        min-height: 30vh;
+    }
+    .sign-container {
+        margin-top: 50px;
+        width: 100%;
+    }
+}
+
+.sign-header h1 {
+    font-size: 4em;
+}
+
+.sign-header h3 {
+    font-size: 2em;
+}
+
+.sign-main {
+    display: grid;
+    grid-area: rightarea;
+    background-color: #ffffff;
+    place-items: center;
+    text-align: center;
+}
+
+.sign-container {
+    outline: #f46524;
+    outline-style: solid;
+}
+
+.sign-tab-container {
+    font-size: large;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.sign-in-tab-container {
+    grid-template-areas: "current-tab alter-tab";
+}
+
+.sign-up-tab-container {
+    grid-template-areas: "alter-tab current-tab";
+}
+
+.sign-tab {
+    padding: 1vh;
+}
+
+.sign-tab-current {
+    font-weight: bold;
+    grid-area: current-tab;
+}
+
+.sign-tab-alter {
+    font-style: italic;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    text-decoration-line: none;
+    grid-area: alter-tab;
+    background-color: #f46524;
+}
+
+.sign-tab-alter:hover {
+    color: black;
+}
+
+.sign-element {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.sign-form-control {
+    padding: 10px;
+    border-color: #f46524;
+    border-radius: 3px;
+    border-style:ridge;
+    width: 80%;
+    accent-color: #f46524;
+}
+
+.sign-button {
+    padding: 10px;
+    width: 100%;
+    color: white;
+    font-size: large;
+    font-weight: bold;
+    background-color: #f46524;
+    border: none;
+}
+
+.sign-button:hover {
+    color: black;
+    cursor: pointer;
+}
+
+/* Index CSS */
+
+.header {
+    color: #ffffff;
+    background: #f46524;
+    font-weight: bold;
+    font-size: large;
+    display: grid;
+    text-align: center;
+    place-items: center;
+    grid-template-columns: 1fr 7fr 1fr 1fr;
+    grid-template-areas: "header-left header-center-left header-center-right header-right";
+}
+
+.header-logo {
+    height: 100%;
+    padding: 1em;
+    grid-area: header-left;
+}
+
+.header-logo:hover {
+    color: black;
+}
+
+.header-subdomain {
+    width: 100%;
+    grid-area: header-center-left;
+}
+
+.header-wallet {
+    color: #ffffff;
+    background-color: #f46524;
+    font-size: larger;
+    font-weight: bold;
+    text-align: center;
+    border: transparent;
+    border-style: solid;
+    border-color: #ffffff;
+    accent-color: #f46524;
+    width: 100%;
+}
+
+.header-wallet:hover {
+    color: black;
+}
+
+.header-settings {
+    padding: 1em;
+    grid-area: header-center-right;
+}
+
+.header-settings:hover {
+    color: black;
+}
+
+.header-logout {
+    padding: 1em;
+    grid-area: header-right;
+}
+
+.header-logout:hover {
+    color: black;
+}
+
+/* Nav CSS */
+
+.body {
+    display: grid;
+    background-color: #ffffff;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas: "nav-area main-area";
+}
+
+.nav {
+    align-items: center;
+    border-right: solid #f46524;
+    grid-area: nav-area;
+}
+
+.nav-container {
+    margin: 10px;
+    border: solid #f46524;
+}
+
+.nav-title {
+    padding: 1em;
+    text-align: center;
+    font-size: xx-large;
+    font-style: italic;
+}
+
+.nav-keyvalue {
+    margin: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "nav-kv-key nav-kv-value";
+}
+
+.nav-key {
+    grid-area: nav-kv-key;
+}
+
+.nav-value {
+    font-size: larger;
+    font-weight: bold;
+    text-align: right;
+    grid-area: nav-kv-value;
+}
+
+.nav-button {
+    margin: 10px;
+    padding: 1em;
+    text-align: center;
+    background-color: #f46524;
+}
+
+.nav-button:hover {
+    color: black;
+}
+
+.main {
+    grid-area: main-area;
+}
+
+.main-item {
+    display: grid;
+    align-items: center;
+    margin: 10px;
+    border: solid #f46524;
+    grid-template-columns: 4fr 2fr 1fr;
+    grid-template-rows: 2fr 1fr;
+}
+
+.main-item-title {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    padding: 10px;
+    font-size: xx-large;
+}
+
+.main-item-category {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    padding: 10px;
+}
+
+.main-item-value {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    padding: 10px;
+    font-size: x-large;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.main-item-date {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    padding: 10px;
+    font-style: italic;
+    text-align: center;
+}
+
+.main-item-controls {
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column-start: 3;
+    grid-column-end: 4;
+    background-color: #f46524;
+    min-height: 100%;
+}
+
+.main-item-options {
+    display: flex;
+    place-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 3em;
+}
+
+.main-item-options:hover .main-item-option {
+    display: block;
+}
+
+.main-item-option {
+    border: solid #f46524;
+    font-size:small;
+    display: none;
+    position: absolute;
+    text-align: center;
+    cursor: pointer;
+    min-width: 10em;
+    z-index: 1;
+    right: 0;
+}
+
+.main-item-edit {
+    border: solid #f46524;
+    padding: 1em;
+    color: black;
+    background-color: white;
+}
+
+.main-item-delete {
+    border: solid #f46524;
+    padding: 1em;
+    color: white;
+    background-color: brown;
+}

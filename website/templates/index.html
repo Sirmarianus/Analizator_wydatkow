@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+    <title>Wydatki</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Analiza i prezentacja codziennych wydatków">
+    <meta name="author" content="Marek Kwak, Piotr Węgrzyn">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <header class="header">
+        <a href="/">
+            <div class="header-logo">
+                WYDATKI
+            </div>
+        </a>
+
+        <div class="header-subdomain">
+            <form action="/wallet">
+                <select name="wallet" class="header-wallet">
+                    <option>Pierwszy portfel</option>
+                    <option>Drugi portfel</option>
+                </select>
+            </form>
+        </div>
+
+        <a href="settings.html">
+            <div class="header-settings">
+                Ustawienia
+            </div>
+        </a>
+        
+        <a href="/login">
+            <div class="header-logout">
+                Wyloguj
+            </div>
+        </a>
+    </header>
+
+    <div class="body">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="nav-title">
+                    BRIEF
+                </div>
+
+                <div class="nav-keyvalue">
+                    <div class="nav-key">
+                        Bilans:
+                    </div>
+
+                    <div class="nav-value">
+                        +200 PLN
+                    </div>
+                </div>
+        
+                <div class="nav-keyvalue">
+                    <div class="nav-key">
+                        Ilość transakcji:
+                    </div>
+                    <div class="nav-value">
+                        1234
+                    </div>
+                </div>
+            </div>
+
+            <a href="show.html">
+                <div class="nav-button">
+                    Pokaż wykresy
+                </div>
+            </a>
+
+            <a href="new.html">
+                <div class="nav-button">
+                    + Nowy wydatek
+                </div>
+            </a>
+
+            
+    
+        </nav>
+        
+        <main class="main">
+            <div class="main-item">
+                <div class="main-item-title">
+                    Parówki
+                </div>
+                
+                <div class="main-item-category">
+                    Jedzenie
+                </div>
+
+                <div class="main-item-value">
+                    127 PLN
+                </div>
+
+                <div class="main-item-date">
+                    07.01.22
+                </div>
+    
+                <div class="main-item-controls">
+                    <div class="main-item-options">
+
+                        <span>:</span>
+
+                        <div class="main-item-option">
+                            <a href="new.html">
+                                <div class="main-item-edit">Edytuj</div>
+                            </a>
+
+                            <a href="index.html">
+                                <div class="main-item-delete">Usuń</div>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
