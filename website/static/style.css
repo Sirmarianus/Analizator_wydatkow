@@ -5,12 +5,31 @@ html {
 
 body {
     margin: 0;
+    overflow: hidden;
 }
 
 a {
     color: white;
     text-decoration: none;
     text-decoration-line: none;
+}
+
+input {
+    padding: 5px;
+    margin: 5px;
+    border-radius: 3px;
+    border-style:ridge;
+    width: 90%;
+    text-align: center;
+    accent-color: #f46524;
+}
+
+textarea {
+    border-radius: 3px;
+    border-style: ridge;
+    width: 80%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    accent-color: #f46524;
 }
 
 /* Sign in/ Sign up CSS */
@@ -137,7 +156,7 @@ a {
     cursor: pointer;
 }
 
-/* Index CSS */
+/* Header CSS */
 
 .header {
     color: #ffffff;
@@ -145,8 +164,10 @@ a {
     font-weight: bold;
     font-size: large;
     display: grid;
+    height: 4em;
     text-align: center;
     place-items: center;
+    align-items: center;
     grid-template-columns: 1fr 7fr 1fr 1fr;
     grid-template-areas: "header-left header-center-left header-center-right header-right";
 }
@@ -201,10 +222,11 @@ a {
     color: black;
 }
 
-/* Nav CSS */
+/* Index CSS */
 
 .body {
     display: grid;
+    height: calc(100vh - 4em);
     background-color: #ffffff;
     grid-template-columns: 1fr 2fr;
     grid-template-areas: "nav-area main-area";
@@ -214,6 +236,23 @@ a {
     align-items: center;
     border-right: solid #f46524;
     grid-area: nav-area;
+}
+
+@media screen and (max-width: 768px) {
+    .body {
+        grid-template-rows: 1fr auto;
+        grid-template-columns: auto;
+        grid-template-areas: "nav-area" "main-area";
+        height: auto;
+    }
+
+    body {
+        overflow: auto;
+    }
+
+    .nav {
+        border-right: 0;
+    }
 }
 
 .nav-container {
@@ -258,13 +297,15 @@ a {
 }
 
 .main {
+    padding: 10px;
     grid-area: main-area;
+    overflow: auto;
 }
 
 .main-item {
     display: grid;
     align-items: center;
-    margin: 10px;
+    margin-bottom: 10px;
     border: solid #f46524;
     grid-template-columns: 4fr 2fr 1fr;
     grid-template-rows: 2fr 1fr;
@@ -315,21 +356,17 @@ a {
     grid-column-end: 4;
     background-color: #f46524;
     min-height: 100%;
-}
-
-.main-item-options {
-    display: flex;
+    display: grid;
     place-items: center;
-    justify-content: center;
+
     position: relative;
-    font-size: 3em;
 }
 
-.main-item-options:hover .main-item-option {
-    display: block;
+.main-item-controls:hover .main-item-controls-container {
+    display: grid;
 }
 
-.main-item-option {
+.main-item-controls-container {
     border: solid #f46524;
     font-size:small;
     display: none;
@@ -339,18 +376,65 @@ a {
     min-width: 10em;
     z-index: 1;
     right: 0;
+    top: 0;
+    bottom: 0;
+    grid-template-rows: 50% 50%;
 }
 
 .main-item-edit {
     border: solid #f46524;
     padding: 1em;
     color: black;
+    height: 100%;
     background-color: white;
+    box-sizing: border-box;
+    display: grid;
+    place-items: center;
 }
 
 .main-item-delete {
     border: solid #f46524;
     padding: 1em;
+    box-sizing: border-box;
     color: white;
+    height: 100%;
     background-color: brown;
+    display: grid;
+    place-items: center;
+}
+
+.new-body {
+    display: grid;
+    min-height: calc(100vh - 4em);
+    background-color: #ffffff;
+    place-items: center;
+}
+
+.new-main {
+    outline: #f46524;
+    outline-style: solid;
+}
+
+.new-container {
+    margin: 0;
+}
+
+.new-button {
+    background-color: #f46524;
+    padding: 10px;
+    text-align: center;
+}
+
+.new-button:hover {
+    color: black;
+}
+
+@media screen and (max-width: 768px) {
+    .new-body {
+        min-height: unset;
+    }
+    .new-main {
+        outline: none;
+        width: 100%;
+    }
 }

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+    <title>Wydatki – Nowy wydatek</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Analiza i prezentacja codziennych wydatków">
+    <meta name="author" content="Marek Kwak, Piotr Węgrzyn">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <header class="header">
+        <a href="index.html">
+            <div class="header-logo">
+                WYDATKI
+            </div>
+        </a>
+
+        <div class="header-subdomain">
+            Utwórz nowy wydatek
+        </div>
+
+        <a href="settings.html">
+            <div class="header-settings">
+                Ustawienia
+            </div>
+        </a>
+        
+        <a href="signin.html">
+            <div class="header-logout">
+                Wyloguj
+            </div>
+        </a>
+    </header>
+    <div class="new-body">
+        <div class="new-main">
+            <div class="new-container">
+
+                <div class="nav-keyvalue">
+                    <div class="nav-keyvalue-key">
+                        Tytuł:
+                    </div>
+                    <div class="nav-keyvalue-value">
+                        <input></input>
+                    </div>
+                </div>
+
+
+                <div class="nav-keyvalue">
+                    <div class="nav-keyvalue-key">
+                        Portfel:
+                    </div>
+                    <div class="nav-keyvalue-value">
+                        <select class="header-wallet">
+                            <option>Pierwszy portfel</option>
+                            <option>Drugi portfel</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="nav-keyvalue">
+                    <div class="nav-keyvalue-key">
+                        Kategoria:
+                    </div>
+                    <div class="nav-keyvalue-value">
+                        <select class="header-wallet">
+                            <optgroup label="Kategoria">
+                                <option>Subkategoria</option>
+                                <option>Druga subkategoria</option>
+                            </optgroup>
+                            <optgroup label="DrugaKategoria">
+                                <option>2Subkategoria</option>
+                                <option>2Druga subkategoria</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="nav-keyvalue">
+                    <div class="nav-keyvalue-key">
+                        Kwota (PLN):
+                    </div>
+                    <div class="nav-keyvalue-value">
+                        <input type="number" placeholder="0 PLN" step="0.01">
+                    </div>
+                </div>
+
+                <div class="nav-keyvalue">
+                    <div class="nav-keyvalue-key">
+                        Data:
+                    </div>
+                    <div class="nav-keyvalue-value">
+                        <input type="date" placeholder="Data">
+                    </div>
+                </div>
+
+                <div class="nav-keyvalue">
+                    <div class="nav-keyvalue-key">
+                        Godzina:
+                    </div>
+                    <div class="nav-keyvalue-value">
+                        <input type="time" placeholder="Godzina">
+                    </div>
+                </div>
+
+                <div class="nav-keyvalue">
+                    <div class="nav-keyvalue-key">
+                        Komentarz:
+                    </div>
+                    <div class="nav-keyvalue-value">
+                        <input></input>
+                    </div>
+                </div>
+            </div>
+
+            <a href="new.html">
+                <div class="new-button">
+                    Dodaj wydatek
+                </div>
+            </a>
+
+        </div>
+    </div>
+</body>
+</html>
