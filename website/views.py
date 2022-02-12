@@ -8,6 +8,11 @@ views = Blueprint('views', __name__)
 @views.route('/')
 def home():
     if data.instance().is_logged():
+        _data = data.instance()
+        cursor = db.cursor()
+        print("""SELECT * FROM expenses WHERE user_id = {} AND wallet_id = {}; """.format(_data._id, _data._active_wallet))
+        cursor.execute("""SELECT * FROM expenses WHERE user_id = {} AND wallet_id = {}; """.format(_data._id, _data._active_wallet))
+        print(cursor.fetchall())
         return render_template("index.html")
     else:
         return redirect(url_for('auth.login'))

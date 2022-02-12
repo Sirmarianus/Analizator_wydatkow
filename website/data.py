@@ -8,6 +8,7 @@ class data(object):
             cls._id = -1
             cls._email = ''
             cls._is_logged = False
+            cls._active_wallet = 1
         return cls._instance
 
     def is_logged(self):
@@ -16,13 +17,13 @@ class data(object):
 
     def login(self, id, email):
         print("id: {}  email: {}".format(id, email))
-        self.id = id
-        self.email = email
+        self._id = id
+        self._email = email
         self._is_logged = True
 
     def logout(self):
-        self.id = -1
-        self.email = ''
+        self._id = -1
+        self._email = ''
         self._is_logged = False
 
          
