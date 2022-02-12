@@ -16,7 +16,6 @@ class data(object):
 
 
     def login(self, id, email):
-        print("id: {}  email: {}".format(id, email))
         self._id = id
         self._email = email
         self._is_logged = True
