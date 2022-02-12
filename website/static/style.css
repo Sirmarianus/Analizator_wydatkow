@@ -177,6 +177,9 @@ input {
 .header-subdomain {
     width: 100%;
     grid-area: header-center-left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .header-wallet {
@@ -350,7 +353,8 @@ input {
     min-height: 100%;
     display: grid;
     place-items: center;
-
+    font-size: xx-large;
+    font-weight: bolder;
     position: relative;
 }
 
@@ -427,4 +431,84 @@ input {
     font-size: x-large;
     color: brown;
     padding: 1em;
+}
+
+.settings-body {
+    overflow: auto;
+}
+
+.settings-main {
+    background-color: #ffffff;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: "set-pass set-wall" "set-cat set-sub";
+}
+
+@media screen and (max-width: 768px) {
+    .settings-main {
+        grid-template-columns: auto;
+        grid-template-rows: auto;
+        grid-template-areas: "set-pass" "set-wall" "set-cat" "set-sub";
+    }
+}
+
+.settings-container {
+    text-align: center;
+    margin: 10px;
+    border: solid #f46524;
+}
+.settings-title {
+    font-size: medium;
+    font-weight: bold;
+}
+
+.settings-password-container {
+    grid-area: set-pass;
+}
+
+.settings-wallets-container {
+    grid-area: set-wall;
+}
+
+.settings-categories-container {
+    grid-area: set-cat;
+}
+
+.settings-subcategories-container {
+    grid-area: set-sub;
+}
+
+.settings-new-cat-sub {
+    height: fit-content;
+}
+
+.settings-element {
+    font-size: x-large;
+}
+
+.settings-tabs {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+
+.settings-delete {
+    background-color: brown;
+    display: grid;
+    place-items: center;
+    color: white;
+    font-size: xx-large;
+    font-weight: bolder;
+}
+
+.settings-category-text {
+    padding: 10px;
+    display: grid;
+    place-items: center;
+    font-size: large;
+}
+
+.settings-subcategory-text {
+    font-size: medium;
+    font-style: italic;
 }
