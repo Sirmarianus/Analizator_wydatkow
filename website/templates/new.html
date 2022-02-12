@@ -56,9 +56,10 @@
                             Portfel:
                         </div>
                         <div class="nav-value">
-                            <select class="header-wallet new-list">
-                                <option>Pierwszy portfel</option>
-                                <option>Drugi portfel</option>
+                            <select class="header-wallet new-list" name="wallet" id="wallet">
+                            {% for wallet in wallets %}
+                                <option value="{{ wallet[0] }}">{{ wallet[1] }}</option>
+                            {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -68,15 +69,14 @@
                             Kategoria:
                         </div>
                         <div class="nav-value">
-                            <select class="header-wallet new-list">
-                                <optgroup label="Kategoria">
-                                    <option>Subkategoria</option>
-                                    <option>Druga subkategoria</option>
+                            <select class="header-wallet new-list" name="category" id="category">
+                            {% for i in range(categories|length) %}
+                                <optgroup label="{{ categories[i][1] }}">
+                                {% for subcategory in subcategories[i] %}
+                                    <option value="{{ subcategory[0] }}">{{ subcategory[1] }}</option>
+                                {% endfor %}
                                 </optgroup>
-                                <optgroup label="DrugaKategoria">
-                                    <option>2Subkategoria</option>
-                                    <option>2Druga subkategoria</option>
-                                </optgroup>
+                            {% endfor %}
                             </select>
                         </div>
                     </div>

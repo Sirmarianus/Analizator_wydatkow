@@ -25,4 +25,8 @@ class data(object):
         self._email = ''
         self._is_logged = False
 
-         
+    def sql_injection_replace(self, word):
+        disallowed_chars = "\'\"!\b\n\r\t\\\%\0"
+        for char in disallowed_chars:
+            word = word.replace(char, '')
+        return word

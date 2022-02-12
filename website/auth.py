@@ -12,9 +12,7 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-        disallowed_chars = "\'\"-!\b\n\r\t\\\%\0"
-        for char in disallowed_chars:
-            email = email.replace(char, '')
+        email = data.instance().sql_injection_replace(email)
         if email != '' and password != '':
             cursor = db.cursor()
             cursor.execute("""SELECT * FROM users WHERE email = "{}" LIMIT 1; """.format(email))
@@ -44,9 +42,7 @@ def sign_up():
         pass1 = request.form.get('password')
         pass2 = request.form.get('password_retype')
         
-        disallowed_chars = "\'\"-!\b\n\r\t\\\%\0"
-        for char in disallowed_chars:
-            email = email.replace(char, '')
+        email = data.instance().sql_injection_replace(email)
 
         if email != '' and pass1 != '' and pass2 != '':
             cursor = db.cursor()
