@@ -1,13 +1,23 @@
-from flask import Blueprint, redirect, render_template, request, flash, jsonify, url_for
-from flask_login import login_required, current_user
+from flask import Blueprint, redirect, render_template, request, flash, url_for
 from . import db
+from .data import data
 
 views = Blueprint('views', __name__)
 
 
 @views.route('/')
 def home():
-    if current_user.is_authenticated:
-        return render_template("index.html", user=current_user)
+    if data.instance().is_logged():
+        return render_template("index.html")
+    else:
+        return redirect(url_for('auth.login'))
+
+
+@views.route('/new', methods=['GET', 'POST'])
+def new():
+    if data.instance().is_logged():
+        if request.method == 'POST':
+            pass
+        return render_template("new.html")
     else:
         return redirect(url_for('auth.login'))

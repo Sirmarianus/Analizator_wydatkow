@@ -8,12 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 <body>
     <header class="header">
-        <a href="index.html">
+        <a href="/">
             <div class="header-logo">
                 WYDATKI
             </div>
@@ -23,13 +23,13 @@
             Utwórz nowy wydatek
         </div>
 
-        <a href="settings.html">
+        <a href="/settings">
             <div class="header-settings">
                 Ustawienia
             </div>
         </a>
         
-        <a href="signin.html">
+        <a href="/logout">
             <div class="header-logout">
                 Wyloguj
             </div>
@@ -116,7 +116,7 @@
                 </div>
             </div>
 
-            <a href="new.html">
+            <a href="/new">
                 <div class="new-button">
                     Dodaj wydatek
                 </div>
