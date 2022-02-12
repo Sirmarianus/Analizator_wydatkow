@@ -15,21 +15,18 @@ a {
 }
 
 input {
-    padding: 5px;
-    margin: 5px;
-    border-radius: 3px;
-    border-style:ridge;
-    width: 90%;
+    border-radius: 0px;
+    border-style: none;
+    outline: #f46524;
+    outline-style: solid;
+    width: 100%;
     text-align: center;
+    padding: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
     accent-color: #f46524;
-}
-
-textarea {
-    border-radius: 3px;
-    border-style: ridge;
-    width: 80%;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    accent-color: #f46524;
+    font-size: medium;
 }
 
 /* Sign in/ Sign up CSS */
@@ -134,16 +131,11 @@ textarea {
 
 .sign-form-control {
     padding: 10px;
-    border-color: #f46524;
-    border-radius: 3px;
-    border-style:ridge;
     width: 80%;
-    accent-color: #f46524;
 }
 
 .sign-button {
     padding: 10px;
-    width: 100%;
     color: white;
     font-size: large;
     font-weight: bold;
@@ -268,7 +260,7 @@ textarea {
 }
 
 .nav-keyvalue {
-    margin: 10px;
+    margin: 20px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-areas: "nav-kv-key nav-kv-value";
@@ -415,19 +407,10 @@ textarea {
     outline-style: solid;
 }
 
-.new-container {
-    margin: 0;
+.new-list {
+    border: none;
 }
 
-.new-button {
-    background-color: #f46524;
-    padding: 10px;
-    text-align: center;
-}
-
-.new-button:hover {
-    color: black;
-}
 
 @media screen and (max-width: 768px) {
     .new-body {
@@ -437,4 +420,11 @@ textarea {
         outline: none;
         width: 100%;
     }
+}
+
+.error-div {
+    text-align: center;
+    font-size: x-large;
+    color: brown;
+    padding: 1em;
 }

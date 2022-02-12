@@ -37,91 +37,83 @@
     </header>
     <div class="new-body">
         <div class="new-main">
-            <div class="new-container">
+            <!-- <div class="error-div"> ERROR TEXT </div> -->
+            <form action='/new' method='POST'>
+                <div class="new-container">
 
-                <div class="nav-keyvalue">
-                    <div class="nav-keyvalue-key">
-                        Tytuł:
+                    <div class="nav-keyvalue">
+                        <div class="nav-key">
+                            Tytuł:
+                        </div>
+                        <div class="nav-value">
+                            <input name="title" id="title" placeholder="Tytuł"></input>
+                        </div>
                     </div>
-                    <div class="nav-keyvalue-value">
-                        <input></input>
+
+
+                    <div class="nav-keyvalue">
+                        <div class="nav-key">
+                            Portfel:
+                        </div>
+                        <div class="nav-value">
+                            <select class="header-wallet new-list">
+                                <option>Pierwszy portfel</option>
+                                <option>Drugi portfel</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="nav-keyvalue">
+                        <div class="nav-key">
+                            Kategoria:
+                        </div>
+                        <div class="nav-value">
+                            <select class="header-wallet new-list">
+                                <optgroup label="Kategoria">
+                                    <option>Subkategoria</option>
+                                    <option>Druga subkategoria</option>
+                                </optgroup>
+                                <optgroup label="DrugaKategoria">
+                                    <option>2Subkategoria</option>
+                                    <option>2Druga subkategoria</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="nav-keyvalue">
+                        <div class="nav-key">
+                            Kwota (PLN):
+                        </div>
+                        <div class="nav-value">
+                            <input name="amount" id="amount" type="number" placeholder="0.00" step="0.01">
+                        </div>
+                    </div>
+
+                    <div class="nav-keyvalue">
+                        <div class="nav-key">
+                            Data:
+                        </div>
+                        <div class="nav-value">
+                            <input name="date" id="date" type="date" placeholder="Data">
+                        </div>
+                    </div>
+
+                    <div class="nav-keyvalue">
+                        <div class="nav-key">
+                            Godzina:
+                        </div>
+                        <div class="nav-value">
+                            <input name="time" id="time" type="time" placeholder="Godzina">
+                        </div>
                     </div>
                 </div>
 
+                <input class="sign-element sign-button" 
+                            type="submit"
+                            value="Dodaj wydatek">
 
-                <div class="nav-keyvalue">
-                    <div class="nav-keyvalue-key">
-                        Portfel:
-                    </div>
-                    <div class="nav-keyvalue-value">
-                        <select class="header-wallet">
-                            <option>Pierwszy portfel</option>
-                            <option>Drugi portfel</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="nav-keyvalue">
-                    <div class="nav-keyvalue-key">
-                        Kategoria:
-                    </div>
-                    <div class="nav-keyvalue-value">
-                        <select class="header-wallet">
-                            <optgroup label="Kategoria">
-                                <option>Subkategoria</option>
-                                <option>Druga subkategoria</option>
-                            </optgroup>
-                            <optgroup label="DrugaKategoria">
-                                <option>2Subkategoria</option>
-                                <option>2Druga subkategoria</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="nav-keyvalue">
-                    <div class="nav-keyvalue-key">
-                        Kwota (PLN):
-                    </div>
-                    <div class="nav-keyvalue-value">
-                        <input type="number" placeholder="0 PLN" step="0.01">
-                    </div>
-                </div>
-
-                <div class="nav-keyvalue">
-                    <div class="nav-keyvalue-key">
-                        Data:
-                    </div>
-                    <div class="nav-keyvalue-value">
-                        <input type="date" placeholder="Data">
-                    </div>
-                </div>
-
-                <div class="nav-keyvalue">
-                    <div class="nav-keyvalue-key">
-                        Godzina:
-                    </div>
-                    <div class="nav-keyvalue-value">
-                        <input type="time" placeholder="Godzina">
-                    </div>
-                </div>
-
-                <div class="nav-keyvalue">
-                    <div class="nav-keyvalue-key">
-                        Komentarz:
-                    </div>
-                    <div class="nav-keyvalue-value">
-                        <input></input>
-                    </div>
-                </div>
-            </div>
-
-            <a href="/new">
-                <div class="new-button">
-                    Dodaj wydatek
-                </div>
-            </a>
-
+            </form>
         </div>
     </div>
 </body>
