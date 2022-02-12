@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+    <title>Wydatki – Ustawienia</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Analiza i prezentacja codziennych wydatków">
+    <meta name="author" content="Marek Kwak, Piotr Węgrzyn">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body class="settings-body">
+    <header class="header">
+        <a href="index.html">
+            <div class="header-logo">
+                WYDATKI
+            </div>
+        </a>
+
+        <div class="header-subdomain">
+            ziemniaczany69magnat@kochamlubuskie.pl
+        </div>
+
+        <a href="index.html">
+            <div class="header-settings">
+                Zapisz
+            </div>
+        </a>
+        
+        <a href="signin.html">
+            <div class="header-logout">
+                Wyloguj
+            </div>
+        </a>
+    </header>
+
+    <main class="settings-main">
+        <div class="settings-password-container">
+            <div class="settings-container">
+                <div class="nav-title">
+                    Zmień hasło
+                </div>
+
+                <form action='/changepassword' method='POST'></form>
+                    <div class="sign-element">Aktualne hasło</div>
+
+                    <div class="sign-element sign-form">
+                        <input name="password" 
+                            type="password" 
+                            class="sign-form-control" 
+                            id="settings-password" 
+                            placeholder="Aktualne hasło">
+                    </div>
+
+                    <div class="sign-element">Nowe hasło</div>
+
+                    <div class="sign-element sign-form">
+                        <input name="settings-password-new"
+                        type="password"
+                        class="sign-form-control"
+                        id="settings-password-new"
+                        placeholder="Nowe hasło">
+                    </div>
+
+                    <div class="sign-element">Powtórz nowe hasło</div>
+
+                    <div class="sign-element sign-form">
+                        <input name="settings-password-retype"
+                        type="password"
+                        class="sign-form-control"
+                        id="settings-password-retype"
+                        placeholder="Powtórz nowe hasło">
+                    </div>
+
+                    <input class="sign-element sign-button" 
+                            type="submit" 
+                            value="Zmień hasło">
+                </form>
+            </div>
+        </div>
+
+        <div class="settings-wallets-container">
+            <div class="settings-container">
+                <div class="nav-title">
+                    Portfele
+                </div>
+
+                <div class="nav-container settings-wallet settings-tabs">
+                    <div class="settings-key">
+                        <div class="nav-keyvalue">
+                            <div class="nav-key">
+                                Nazwa:
+                            </div>
+                            <div class="nav-value">
+                                Gotówka
+                            </div>
+                        </div>
+                        <div class="nav-keyvalue">
+                            <div class="nav-key">
+                                Waluta:
+                            </div>
+                            <div class="nav-value">
+                                PLN
+                            </div>
+                        </div>
+                        <div class="nav-keyvalue">
+                            <div class="nav-key">
+                                Kwota początkowa:
+                            </div>
+                            <div class="nav-value">
+                                200.00
+                            </div>
+                        </div>
+                    </div>
+                    <a href="" class="settings-delete">
+                        <div class="settings-delete">X</div>
+                    </a>
+                </div>
+
+                <form action='/new-category' class="nav-container settings-new-cat-sub" method='POST'>
+                    <div class="sign-element settings-element">Nowy portfel:</div>
+
+                    <div class="nav-keyvalue">
+                        <div class="nav-key">
+                            Nazwa:
+                        </div>
+                        <div class="nav-value">
+                            <input name="title" id="title" placeholder="Nazwa nowego portfela"></input>
+                        </div>
+                    </div>
+
+                    <div class="nav-keyvalue">
+                        <div class="nav-key">
+                            Waluta:
+                        </div>
+                        <div class="nav-value">
+                            <select class="header-wallet new-list">
+                                <option>CHF</option>
+                                <option>PLN</option>
+                                <option>USD</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="nav-keyvalue">
+                        <div class="nav-key">
+                            Kwota początkowa:
+                        </div>
+                        <div class="nav-value">
+                            <input name="amount" id="amount" type="number" placeholder="0.00" step="0.01">
+                        </div>
+                    </div>
+
+                    <input class="sign-element sign-button" 
+                            type="submit"
+                            value="Dodaj portfel">
+                </form>
+            </div>
+        </div>
+
+        <div class="settings-categories-container">
+
+            <div class="settings-container">
+                
+                <div class="nav-title">
+                    Kategorie
+                </div>
+
+                <div class="nav-container settings-wallet settings-tabs">
+                    <div class="settings-key settings-category-text">
+                        Dzienne zakupy
+                    </div>
+                    <a href="" class="settings-delete">
+                        <div class="settings-delete">X</div>
+                    </a>
+                </div>
+
+                <form action='/new-category' class="nav-container settings-new-cat-sub" method='POST'>
+                    <div class="sign-element settings-element">Nowa kategoria:</div>
+
+                    <div class="sign-element sign-form">
+                        <input name="new-category"
+                        class="sign-form-control"
+                        id="new-category"
+                        placeholder="Nazwa nowej kategorii">
+                    </div>
+
+                    <input class="sign-element sign-button" 
+                            type="submit"
+                            value="Dodaj kategorię">
+                </form>
+            </div>
+        </div>
+
+        <div class="settings-subcategories-container">
+
+            <div class="settings-container">
+                <div class="nav-title">
+                    Podkategorie
+                </div>
+
+                <div class="nav-container settings-wallet settings-tabs">
+                    <div class="settings-key settings-category-text">
+                        <span>Jedzenie</span><br>
+                        <span class="settings-subcategory-text">Dzienne zakupy</span>
+                    </div>
+                    <a href="" class="settings-delete">
+                        <div class="settings-delete">X</div>
+                    </a>
+                </div>
+
+                <form action='/new-subcategory' class="nav-container settings-new-cat-sub" method='POST'>
+                    <div class="sign-element settings-element">Nowa podkategoria:</div>
+
+                    <div class="sign-element sign-form">
+                        <input name="new-subcategory"
+                        class="sign-form-control"
+                        id="new-category"
+                        placeholder="Nazwa nowej podkategorii">
+                    </div>
+
+                    <div class="nav-keyvalue">
+                        <div class="nav-key">
+                            Kategoria nadrzędna:
+                        </div>
+                        <div class="nav-value">
+                            <select class="header-wallet new-list">
+                                <option>Pierwsza</option>
+                                <option>Druga</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input class="sign-element sign-button" 
+                            type="submit"
+                            value="Dodaj podkategorię">
+                </form>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
