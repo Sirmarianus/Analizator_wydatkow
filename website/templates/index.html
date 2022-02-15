@@ -20,10 +20,12 @@
         </a>
 
         <div class="header-subdomain">
-            <form action="/wallet">
-                <select name="wallet" class="header-wallet">
-                    <option>Pierwszy portfel</option>
-                    <option>Drugi portfel</option>
+            <form action="/" method='POST'>
+                <select name="wallet" class="header-wallet" onchange="this.form.submit()">
+                    <option value="" disabled selected>Zmień portfel:</option>
+                {% for wallet in wallets %}
+                    <option value="{{ wallet[0] }}">{{ wallet[1] }}</option>
+                {% endfor %}
                 </select>
             </form>
         </div>
@@ -45,7 +47,7 @@
         <nav class="nav">
             <div class="nav-container">
                 <div class="nav-title">
-                    BRIEF
+                    {{ wallet[0] }}
                 </div>
 
                 <div class="nav-keyvalue">
@@ -54,7 +56,7 @@
                     </div>
 
                     <div class="nav-value">
-                        +200 PLN
+                        {{ wallet[1] }} {{ wallet[2] }}
                     </div>
                 </div>
         
@@ -85,7 +87,7 @@
         </nav>
         
         <main class="main">
-            {% for ele in fetched_data %}
+            {% for ele in expenses %}
             <div class="main-item">
                 <div class="main-item-title">
                     {{ ele[1] }}
@@ -112,7 +114,7 @@
                             <div class="main-item-edit">Edytuj</div>
                         </a>
 
-                        <a href="/delete?expense_id={{ele[0]}}">
+                        <a href="/delete-expense?expense_id={{ele[0]}}">
                             <div class="main-item-delete">Usuń</div>
                         </a>
                     </div>

@@ -8,28 +8,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 <body class="settings-body">
     <header class="header">
-        <a href="index.html">
+        <a href="/">
             <div class="header-logo">
                 WYDATKI
             </div>
         </a>
 
         <div class="header-subdomain">
-            ziemniaczany69magnat@kochamlubuskie.pl
+            {{ email[0] }}
         </div>
 
-        <a href="index.html">
+<!--        <a href="/">
             <div class="header-settings">
                 Zapisz
             </div>
         </a>
-        
-        <a href="signin.html">
+-->        
+        <a href="/logout">
             <div class="header-logout">
                 Wyloguj
             </div>
@@ -43,7 +43,7 @@
                     Zmień hasło
                 </div>
 
-                <form action='/changepassword' method='POST'></form>
+                <form action='/changepassword' method='POST'>
                     <div class="sign-element">Aktualne hasło</div>
 
                     <div class="sign-element sign-form">
@@ -57,7 +57,7 @@
                     <div class="sign-element">Nowe hasło</div>
 
                     <div class="sign-element sign-form">
-                        <input name="settings-password-new"
+                        <input name="password-new"
                         type="password"
                         class="sign-form-control"
                         id="settings-password-new"
@@ -67,7 +67,7 @@
                     <div class="sign-element">Powtórz nowe hasło</div>
 
                     <div class="sign-element sign-form">
-                        <input name="settings-password-retype"
+                        <input name="password-retype"
                         type="password"
                         class="sign-form-control"
                         id="settings-password-retype"
@@ -88,13 +88,14 @@
                 </div>
 
                 <div class="nav-container settings-wallet settings-tabs">
+                {% for wallet in wallets %}
                     <div class="settings-key">
                         <div class="nav-keyvalue">
                             <div class="nav-key">
                                 Nazwa:
                             </div>
                             <div class="nav-value">
-                                Gotówka
+                                {{ wallet[1] }}
                             </div>
                         </div>
                         <div class="nav-keyvalue">
@@ -102,24 +103,25 @@
                                 Waluta:
                             </div>
                             <div class="nav-value">
-                                PLN
+                                {{ wallet[3] }}
                             </div>
                         </div>
                         <div class="nav-keyvalue">
                             <div class="nav-key">
-                                Kwota początkowa:
+                                Stan konta:
                             </div>
                             <div class="nav-value">
-                                200.00
+                                {{ wallet[2] }}
                             </div>
                         </div>
                     </div>
-                    <a href="" class="settings-delete">
+                    <a href="/delete-wallet?wallet_id={{wallet[0]}}" class="settings-delete">
                         <div class="settings-delete">X</div>
                     </a>
+                {% endfor %}
                 </div>
 
-                <form action='/new-category' class="nav-container settings-new-cat-sub" method='POST'>
+                <form action='/new-wallet' class="nav-container settings-new-cat-sub" method='POST'>
                     <div class="sign-element settings-element">Nowy portfel:</div>
 
                     <div class="nav-keyvalue">
@@ -127,7 +129,7 @@
                             Nazwa:
                         </div>
                         <div class="nav-value">
-                            <input name="title" id="title" placeholder="Nazwa nowego portfela"></input>
+                            <input name="name" id="name" placeholder="Nazwa nowego portfela"></input>
                         </div>
                     </div>
 
@@ -136,10 +138,10 @@
                             Waluta:
                         </div>
                         <div class="nav-value">
-                            <select class="header-wallet new-list">
-                                <option>CHF</option>
-                                <option>PLN</option>
-                                <option>USD</option>
+                            <select name="currency" class="header-wallet new-list">
+                                <option value="CHF">CHF</option>
+                                <option value="PLN">PLN</option>
+                                <option value="USD">USD</option>
                             </select>
                         </div>
                     </div>
@@ -149,7 +151,7 @@
                             Kwota początkowa:
                         </div>
                         <div class="nav-value">
-                            <input name="amount" id="amount" type="number" placeholder="0.00" step="0.01">
+                            <input name="amount" id="amount" type="number" placeholder="0" step="1">
                         </div>
                     </div>
 
@@ -169,12 +171,14 @@
                 </div>
 
                 <div class="nav-container settings-wallet settings-tabs">
+                {% for category in categories %}
                     <div class="settings-key settings-category-text">
-                        Dzienne zakupy
+                        {{ category[1] }}
                     </div>
-                    <a href="" class="settings-delete">
+                    <a href="/delete-category?category_id={{category[0]}}" class="settings-delete">
                         <div class="settings-delete">X</div>
                     </a>
+                {% endfor %}
                 </div>
 
                 <form action='/new-category' class="nav-container settings-new-cat-sub" method='POST'>
@@ -202,13 +206,17 @@
                 </div>
 
                 <div class="nav-container settings-wallet settings-tabs">
+                {% for i in range(categories|length) %}
+                    {% for subcategory in subcategories[i] %}
                     <div class="settings-key settings-category-text">
-                        <span>Jedzenie</span><br>
-                        <span class="settings-subcategory-text">Dzienne zakupy</span>
+                        <span>{{ categories[i][1] }}</span><br>
+                        <span class="settings-subcategory-text">{{ subcategory[1] }}</span>
                     </div>
-                    <a href="" class="settings-delete">
+                    <a href="/delete-subcategory?subcategory_id={{subcategory[0]}}" class="settings-delete">
                         <div class="settings-delete">X</div>
                     </a>
+                    {% endfor %}
+                {% endfor %}
                 </div>
 
                 <form action='/new-subcategory' class="nav-container settings-new-cat-sub" method='POST'>

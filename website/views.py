@@ -7,14 +7,26 @@ from datetime import datetime, date, time
 views = Blueprint('views', __name__)
 
 
-@views.route('/')
+@views.route('/', methods=['GET', 'POST'])
 def home():
     if data.instance().is_logged():
         _data = data.instance()
         cursor = db.cursor()
+        if request.method == 'POST':
+            _wallet_id = request.form.get('wallet')
+            if _wallet_id.isdecimal():
+                _data._active_wallet = _wallet_id
+
+        cursor.execute("""SELECT name, amount, currency FROM wallets WHERE id={}""".format(_data._active_wallet))
+        _wallet = cursor.fetchone()
+
+        cursor.execute("""SELECT id, name FROM wallets WHERE user_id={};""".format(_data._id))
+        _wallets = cursor.fetchall()
+        
         cursor.execute("""SELECT e.id, e.title, e.amount, e.transaction_datetime, ec.name as subcategory, (SELECT name FROM expense_categories WHERE ec.parent_id=id) as category FROM expenses e, expense_categories ec WHERE e.category_id=ec.id AND ec.parent_id IS NOT NULL AND e.wallet_id={} AND e.user_id={} ORDER BY e.transaction_datetime DESC;""".format(_data._active_wallet, _data._id))
-        fetched_data = cursor.fetchall()
-        return render_template("index.html", fetched_data=fetched_data)
+        _expenses = cursor.fetchall()
+
+        return render_template("index.html", expenses=_expenses, wallets=_wallets, wallet=_wallet)
     else:
         return redirect(url_for('auth.login'))
 
@@ -37,11 +49,16 @@ def new():
             _date = data.instance().sql_injection_replace(_date)
             _time = request.form.get('time')
             _time = data.instance().sql_injection_replace(_time)
-            _datetime = datetime.combine(date.fromisoformat(_date), time.fromisoformat(_time))
-
-            if _datetime != '' and _amount != '' and _title != '' and _wallet != '' and _category != '' and _user_id != '':
+            if _date != '' and _time != '' and _amount != '' and _title != '' and _wallet != '' and _category != '' and _user_id != '' and len(_date) == 8:
+                _date = _date[:4] + '-' + _date[4:6] + '-' + _date[6:]
+                _datetime = datetime.combine(date.fromisoformat(_date), time.fromisoformat(_time))
                 cursor.execute("""INSERT INTO expenses (transaction_datetime, amount, title, wallet_id, category_id, user_id) VALUES ("{}", {}, "{}", {}, {}, {});""".format(_datetime, _amount, _title, int(_wallet), int(_category), _user_id))
+                cursor.execute("""UPDATE wallets SET amount=amount-{} WHERE id={}""".format(_amount, int(_wallet)))
                 db.commit()
+                
+                return redirect(url_for('views.home'))
+            else:
+                flash("Some fields are empty boii")
         
         cursor.execute("""SELECT id, name FROM expense_categories WHERE parent_id IS NULL AND user_id={};""".format(_user_id))
         _categories = cursor.fetchall()
@@ -58,16 +75,25 @@ def new():
         return redirect(url_for('auth.login'))
 
 
-@views.route('/delete', methods=['GET', 'POST'])
-def delete():
-    expense_id = request.args.get('expense_id')
-    if expense_id.isdecimal():
-        user_id = data.instance()._id
+@views.route('/settings', methods=['GET', 'POST'])
+def settings():
+    _data = data.instance()
+    if _data.is_logged():
         cursor = db.cursor()
-        cursor.execute("""SELECT user_id FROM expenses WHERE id={}""".format(expense_id))
-        if user_id == cursor.fetchone()[0]:
-            cursor.execute("""DELETE FROM expenses WHERE id={}""".format(expense_id))
-            db.commit()
+        cursor.execute("""SELECT id, name, amount, currency FROM wallets WHERE user_id={};""".format(_data._id))
+        _wallets = cursor.fetchall()
 
-    return redirect(url_for('views.home'))
+        cursor.execute("""SELECT id, name FROM expense_categories WHERE parent_id IS NULL AND user_id={};""".format(_data._id))
+        _categories = cursor.fetchall()
+        _subcategories = []
+        for ele in _categories:
+            cursor.execute("""SELECT id, name FROM expense_categories WHERE parent_id IS NOT NULL AND parent_id={} AND user_id={};""".format(ele[0], _data._id))
+            _subcategories.append(cursor.fetchall())
+        
+        cursor.execute("""SELECT email FROM users WHERE id={}""".format(_data._id))
+        _email = cursor.fetchone()
 
+        return render_template('settings.html', wallets=_wallets, categories=_categories, subcategories=_subcategories, email=_email)
+    
+    else:
+        return redirect(url_for('auth.login'))
