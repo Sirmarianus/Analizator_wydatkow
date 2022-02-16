@@ -164,6 +164,11 @@ input {
     grid-template-areas: "header-left header-center-left header-center-right header-right";
 }
 
+.header-settings-container {
+    grid-template-columns: 1fr 7fr 1fr;
+    grid-template-areas: "header-left header-center-left header-right";
+}
+
 .header-logo {
     height: 100%;
     padding: 1em;
@@ -193,10 +198,12 @@ input {
     border-color: #ffffff;
     accent-color: #f46524;
     width: 100%;
+    height: 100%;
 }
 
 .header-wallet:hover {
     color: black;
+    cursor: pointer;
 }
 
 .header-settings {
@@ -270,6 +277,8 @@ input {
 }
 
 .nav-key {
+    display: grid;
+    place-content: center;
     grid-area: nav-kv-key;
 }
 
@@ -458,6 +467,7 @@ input {
     margin: 10px;
     border: solid #f46524;
 }
+
 .settings-title {
     font-size: medium;
     font-weight: bold;
@@ -511,4 +521,87 @@ input {
 .settings-subcategory-text {
     font-size: medium;
     font-style: italic;
+}
+
+.charts-body {
+    overflow: auto;
+}
+
+.charts-main {
+    background-color: #ffffff;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    overflow: auto;
+    grid-template-areas: "chart-left chart-right";
+}
+
+.chart-container1 {
+    /* margin-bottom: 10px; */
+    grid-area: chart-left;
+}
+
+.chart-container2 {
+    /* margin-bottom: 10px; */
+    grid-area: chart-right;
+}
+
+.chart-header {
+    text-align: center;
+    min-height: 5em;
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    grid-template-areas: "button-left title button-right";
+}
+
+.chart-button {
+    margin: 10px;
+    display: grid;
+    place-items: center;
+    font-size: xx-large;
+    color: white;
+    background-color: #f46524;
+}
+
+.chart-button:hover {
+    color: black;
+    cursor: pointer;
+}
+
+.chart-button-left {
+    grid-area: button-left;
+}
+
+.chart-button-right {
+    grid-area: button-right;
+}
+
+.chart-title {
+    margin: 5px;
+    font-size: x-large;
+    display: grid;
+    place-content: center;
+    grid-area: title;
+}
+
+.chart {
+    display: grid;
+    place-items: center;
+    min-height: 50vh;
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .charts-main {
+        width: 100%;
+        background-color: #ffffff;
+        display: grid;
+        min-height: auto;
+        grid-template-columns: auto;
+        grid-template-areas: "chart-left" "chart-right";
+    }
+}
+
+canvas {
+    width: 100% !important;
 }
