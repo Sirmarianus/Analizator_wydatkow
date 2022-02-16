@@ -1,3 +1,4 @@
+from unicodedata import category
 from flask import Blueprint, render_template, flash, request, flash, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
@@ -140,6 +141,27 @@ def new_category():
             if new_category != '':
                 cursor = db.cursor()
                 cursor.execute("""INSERT INTO expense_categories (user_id, name, parent_id) VALUES ({}, '{}', NULL)""".format(_data._id, new_category))
+                db.commit()
+
+            return redirect(url_for('views.settings'))
+
+    else:
+        return redirect(url_for('auth.login'))
+
+
+@auth.route('/new-subcategory', methods=['GET', 'POST'])
+def new_subcategory():
+    _data = data.instance()
+    if _data.is_logged():
+        if request.method == "POST":
+            new_subcategory = request.form.get('new-subcategory')
+            new_subcategory = _data.sql_injection_replace(new_subcategory)
+
+            category = request.form.get('category')
+
+            if new_subcategory != '' and category.isdecimal():
+                cursor = db.cursor()
+                cursor.execute("""INSERT INTO expense_categories (user_id, name, parent_id) VALUES ({}, '{}', {}})""".format(_data._id, new_subcategory, category))
                 db.commit()
 
             return redirect(url_for('views.settings'))

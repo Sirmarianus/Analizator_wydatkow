@@ -234,9 +234,11 @@
                             Kategoria nadrzędna:
                         </div>
                         <div class="nav-value">
-                            <select class="header-wallet new-list">
-                                <option>Pierwsza</option>
-                                <option>Druga</option>
+                            <select class="header-wallet new-list" name="category">
+                                <option value="" disabled selected hidden>Wybierz kategorię:</option>
+                            {% for category in categories %}
+                                <option value="{{category[0]}}">{{category[1]}}</option>
+                            {% endfor %}
                             </select>
                         </div>
                     </div>

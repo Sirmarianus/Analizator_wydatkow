@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+    <title>Wydatki – Edycja wydatku</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Analiza i prezentacja codziennych wydatków">
+    <meta name="author" content="Marek Kwak, Piotr Węgrzyn">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <header class="header">
+        <a href="/">
+            <div class="header-logo">
+                WYDATKI
+            </div>
+        </a>
+
+        <div class="header-subdomain">
+            Edytuj wydatek
+        </div>
+
+        <a href="/settings">
+            <div class="header-settings">
+                Ustawienia
+            </div>
+        </a>
+        
+        <a href="/logout">
+            <div class="header-logout">
+                Wyloguj
+            </div>
+        </a>
+    </header>
+    <div class="new-body">
+        <div class="new-main">
+            <!-- <div class="error-div"> ERROR TEXT </div> -->
+            <form action='/update?expense_id={{id}}' method='POST'>
+                <div class="new-container">
+
+                    <div class="nav-keyvalue">
+                        <div class="nav-key">
+                            Tytuł:
+                        </div>
+                        <div class="nav-value">
+                            <input name="title" id="title" placeholder="Tytuł" value="{{title}}"></input>
+                        </div>
+                    </div>
+
+
+                    <div class="nav-keyvalue">
+                        <div class="nav-key">
+                            Portfel:
+                        </div>
+                        <div class="nav-value">
+                            <select class="header-wallet new-list" name="wallet" id="wallet">
+                            {% for wallet in wallets %}
+                                {% if wallet[0]== wallet_id %}
+                                <option value="{{ wallet[0] }}" selected="selected">{{ wallet[1] }}</option>
+                                {% else %}
+                                <option value="{{ wallet[0] }}">{{ wallet[1] }}</option>
+                                {% endif %} 
+                            {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="nav-keyvalue">
+                        <div class="nav-key">
+                            Kategoria:
+                        </div>
+                        <div class="nav-value">
+                            <select class="header-wallet new-list" name="category" id="category">
+                            {% for i in range(categories|length) %}
+                                <optgroup label="{{ categories[i][1] }}">
+                                {% for subcategory in subcategories[i] %}
+                                    {% if subcategory[0]== category_id %}
+                                    <option value="{{ subcategory[0] }}" selected="selected">{{ subcategory[1] }}</option>
+                                    {% else %}
+                                    <option value="{{ subcategory[0] }}">{{ subcategory[1] }}</option>
+                                    {% endif %} 
+                                {% endfor %}
+                                </optgroup>
+                            {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="nav-keyvalue">
+                        <div class="nav-key">
+                            Kwota (PLN):
+                        </div>
+                        <div class="nav-value">
+                            <input name="amount" id="amount" type="number" placeholder="0" step="1" value="{{amount}}">
+                        </div>
+                    </div>
+
+                    <div class="nav-keyvalue">
+                        <div class="nav-key">
+                            Data:
+                        </div>
+                        <div class="nav-value">
+                            <input name="date" id="date" type="date" placeholder="Data" value="{{date}}">
+                        </div>
+                    </div>
+
+                    <div class="nav-keyvalue">
+                        <div class="nav-key">
+                            Godzina:
+                        </div>
+                        <div class="nav-value">
+                            <input name="time" id="time" type="time" placeholder="Godzina" value="{{time}}">
+                        </div>
+                    </div>
+                </div>
+
+                <input class="sign-element sign-button" 
+                            type="submit"
+                            value="Zapisz">
+
+            </form>
+        </div>
+    </div>
+</body>
+</html>

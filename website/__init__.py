@@ -39,10 +39,10 @@ def create_database():
 
 def create_tables():
     cursor = connection.cursor()
-    cursor.execute("CREATE TABLE expenses_db.users ( id INT NOT NULL AUTO_INCREMENT, email VARCHAR(30) NOT NULL, password CHAR(88) NOT NULL, PRIMARY KEY (id), UNIQUE (email));")
-    cursor.execute("CREATE TABLE expenses_db.expense_categories ( id INT NOT NULL AUTO_INCREMENT, user_id INT NOT NULL, name VARCHAR(30) NOT NULL, parent_id INT, PRIMARY KEY (id),  FOREIGN KEY (parent_id) REFERENCES expense_categories(id) ON DELETE CASCADE, FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE);")
-    cursor.execute("CREATE TABLE expenses_db.wallets ( id INT NOT NULL AUTO_INCREMENT, name VARCHAR(30) user_id INT NOT NULL, amount INT NOT NULL, currency VARCHAR(30) NOT NULL, PRIMARY KEY (id), FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE);")
-    cursor.execute("CREATE TABLE expenses_db.expenses (id INT AUTO_INCREMENT, title TEXT, transaction_datetime DATETIME NOT NULL DEFAULT NOW(),  amount INT NOT NULL, wallet_id INT NOT NULL, category_id INT NOT NULL, user_id INT NOT NULL, PRIMARY KEY(id), FOREIGN KEY(wallet_id) REFERENCES wallets(id) ON DELETE CASCADE, FOREIGN KEY(category_id) REFERENCES expense_categories(id) ON DELETE CASCADE, FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE);")
+    cursor.execute("CREATE TABLE expenses_db.users ( id INT NOT NULL AUTO_INCREMENT, email VARCHAR(30) NOT NULL, password CHAR(88) NOT NULL, PRIMARY KEY (id), UNIQUE (email)) DEFAULT CHARSET=utf8mb4;")
+    cursor.execute("CREATE TABLE expenses_db.expense_categories ( id INT NOT NULL AUTO_INCREMENT, user_id INT NOT NULL, name VARCHAR(30) NOT NULL, parent_id INT, PRIMARY KEY (id),  FOREIGN KEY (parent_id) REFERENCES expense_categories(id) ON DELETE CASCADE, FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE) DEFAULT CHARSET=utf8mb4;")
+    cursor.execute("CREATE TABLE expenses_db.wallets ( id INT NOT NULL AUTO_INCREMENT, name VARCHAR(30), user_id INT NOT NULL, amount INT NOT NULL, currency VARCHAR(30) NOT NULL, PRIMARY KEY (id), FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE) DEFAULT CHARSET=utf8mb4;")
+    cursor.execute("CREATE TABLE expenses_db.expenses (id INT AUTO_INCREMENT, title TEXT, transaction_datetime DATETIME NOT NULL DEFAULT NOW(), amount INT NOT NULL, wallet_id INT NOT NULL, category_id INT NOT NULL, user_id INT NOT NULL, PRIMARY KEY(id), FOREIGN KEY(wallet_id) REFERENCES wallets(id) ON DELETE CASCADE, FOREIGN KEY(category_id) REFERENCES expense_categories(id) ON DELETE CASCADE, FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE) DEFAULT CHARSET=utf8mb4;")
 
 
 def create_app():

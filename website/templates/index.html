@@ -22,7 +22,7 @@
         <div class="header-subdomain">
             <form action="/" method='POST'>
                 <select name="wallet" class="header-wallet" onchange="this.form.submit()">
-                    <option value="" disabled selected>Zmień portfel:</option>
+                    <option value="" disabled selected hidden>Zmień portfel:</option>
                 {% for wallet in wallets %}
                     <option value="{{ wallet[0] }}">{{ wallet[1] }}</option>
                 {% endfor %}
@@ -57,15 +57,6 @@
 
                     <div class="nav-value">
                         {{ wallet[1] }} {{ wallet[2] }}
-                    </div>
-                </div>
-        
-                <div class="nav-keyvalue">
-                    <div class="nav-key">
-                        Ilość transakcji:
-                    </div>
-                    <div class="nav-value">
-                        1234
                     </div>
                 </div>
             </div>
@@ -110,7 +101,7 @@
                     <span>:</span>
 
                     <div class="main-item-controls-container">
-                        <a href="/update">
+                        <a href="/update?expense_id={{ele[0]}}">
                             <div class="main-item-edit">Edytuj</div>
                         </a>
 
