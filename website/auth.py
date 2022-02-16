@@ -160,7 +160,7 @@ def new_subcategory():
 
             if new_subcategory != '' and category.isdecimal():
                 cursor = db.cursor()
-                cursor.execute("""INSERT INTO expense_categories (user_id, name, parent_id) VALUES ({}, '{}', {}})""".format(_data._id, new_subcategory, category))
+                cursor.execute("""INSERT INTO expense_categories (user_id, name, parent_id) VALUES ({}, '{}', {})""".format(_data._id, new_subcategory, category))
                 db.commit()
 
             return redirect(url_for('views.settings'))
