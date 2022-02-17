@@ -63,7 +63,7 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(id):
-        return User(id, 0)
+        return User(id)
 
 
     return app

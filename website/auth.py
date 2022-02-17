@@ -20,7 +20,7 @@ def login():
             row = cursor.fetchone()
             if row is not None:
                 if check_password_hash(password=password, pwhash=row[2]):
-                    user = User(row[0], 0)
+                    user = User(row[0])
                     login_user(user, remember=True)
                     return redirect(url_for('views.home'))
                 else:
@@ -75,9 +75,8 @@ def delete_expense():
         cursor = db.cursor()
         cursor.execute("""SELECT user_id, amount, wallet_id FROM expenses WHERE id={}""".format(expense_id))
         _fetched_data = cursor.fetchone()
-        print(type(current_user.id))
-        print(type(_fetched_data[0]))
-        if current_user.id == _fetched_data[0]:
+
+        if int(current_user.id) == _fetched_data[0]:
             cursor.execute("""DELETE FROM expenses WHERE id={}""".format(expense_id))
             cursor.execute("""UPDATE wallets SET amount=amount+{} WHERE id={}""".format(_fetched_data[1], int(_fetched_data[2])))
             db.commit()
@@ -99,10 +98,10 @@ def changepassword():
                 flash("Passwords not the same")
             else:
                 cursor = db.cursor()
-                cursor.execute("""SELECT password FROM users WHERE id={}""".format(current_user.id))
+                cursor.execute("""SELECT password FROM users WHERE id={}""".format(int(current_user.id)))
                 password_hash = cursor.fetchone()[0]
                 if check_password_hash(password_hash, password):
-                    cursor.execute("""UPDATE users SET password='{}' WHERE id={};""".format(generate_password_hash(password_new, method='sha256'), current_user.id))
+                    cursor.execute("""UPDATE users SET password='{}' WHERE id={};""".format(generate_password_hash(password_new, method='sha256'), int(current_user.id)))
 
         return redirect(url_for('views.settings'))
 
@@ -120,7 +119,7 @@ def new_wallet():
 
         if name != '' and currency != '' and amount != '' and amount.isdecimal():
             cursor = db.cursor()
-            cursor.execute("""INSERT INTO wallets (name, user_id, amount, currency) VALUES ('{}', {}, {}, '{}')""".format(name, current_user.id, amount, currency))
+            cursor.execute("""INSERT INTO wallets (name, user_id, amount, currency) VALUES ('{}', {}, {}, '{}')""".format(name, int(current_user.id), amount, currency))
             db.commit()
 
         return redirect(url_for('views.settings'))
@@ -135,7 +134,7 @@ def new_category():
 
         if new_category != '':
             cursor = db.cursor()
-            cursor.execute("""INSERT INTO expense_categories (user_id, name, parent_id) VALUES ({}, '{}', NULL)""".format(current_user.id, new_category))
+            cursor.execute("""INSERT INTO expense_categories (user_id, name, parent_id) VALUES ({}, '{}', NULL)""".format(int(current_user.id), new_category))
             db.commit()
 
         return redirect(url_for('views.settings'))
@@ -152,7 +151,7 @@ def new_subcategory():
 
         if new_subcategory != '' and category.isdecimal():
             cursor = db.cursor()
-            cursor.execute("""INSERT INTO expense_categories (user_id, name, parent_id) VALUES ({}, '{}', {})""".format(current_user.id, new_subcategory, category))
+            cursor.execute("""INSERT INTO expense_categories (user_id, name, parent_id) VALUES ({}, '{}', {})""".format(int(current_user.id), new_subcategory, category))
             db.commit()
 
         return redirect(url_for('views.settings'))
@@ -166,7 +165,7 @@ def delete_wallet():
         cursor = db.cursor()
         cursor.execute("""SELECT user_id FROM wallets WHERE id={}""".format(wallet_id))
         _fetched_data = cursor.fetchone()
-        if current_user.id == _fetched_data[0]:
+        if int(current_user.id) == _fetched_data[0]:
             cursor.execute("""DELETE FROM wallets WHERE id={}""".format(wallet_id))
             db.commit()
 
@@ -181,7 +180,7 @@ def delete_category():
         cursor = db.cursor()
         cursor.execute("""SELECT user_id FROM expense_categories WHERE id={}""".format(category_id))
         _fetched_data = cursor.fetchone()
-        if current_user.id == _fetched_data[0]:
+        if int(current_user.id) == _fetched_data[0]:
             cursor.execute("""DELETE FROM expense_categories WHERE id={}""".format(category_id))
             db.commit()
 
@@ -196,7 +195,7 @@ def delete_subcategory():
         cursor = db.cursor()
         cursor.execute("""SELECT user_id FROM expense_categories WHERE id={}""".format(subcategory_id))
         _fetched_data = cursor.fetchone()
-        if current_user.id == _fetched_data[0]:
+        if int(current_user.id) == _fetched_data[0]:
             cursor.execute("""DELETE FROM expense_categories WHERE id={}""".format(subcategory_id))
             db.commit()
 

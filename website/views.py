@@ -17,15 +17,16 @@ def home():
     if request.method == 'POST':
         _wallet_id = request.form.get('wallet')
         if _wallet_id.isdecimal():
-            current_user.active_wallet = _wallet_id
+            current_user.set_active_wallet(_wallet_id)
 
-    cursor.execute("""SELECT name, amount, currency FROM wallets WHERE id={}""".format(current_user.active_wallet))
+    print(current_user.get_active_wallet())
+    cursor.execute("""SELECT name, amount, currency FROM wallets WHERE id={}""".format(current_user.get_active_wallet()))
     _wallet = cursor.fetchone()
 
-    cursor.execute("""SELECT id, name FROM wallets WHERE user_id={};""".format(current_user.id))
+    cursor.execute("""SELECT id, name FROM wallets WHERE user_id={};""".format(int(current_user.id)))
     _wallets = cursor.fetchall()
     
-    cursor.execute("""SELECT e.id, e.title, e.amount, e.transaction_datetime, ec.name as subcategory, (SELECT name FROM expense_categories WHERE ec.parent_id=id) as category FROM expenses e, expense_categories ec WHERE e.category_id=ec.id AND ec.parent_id IS NOT NULL AND e.wallet_id={} AND e.user_id={} ORDER BY e.transaction_datetime DESC;""".format(current_user.active_wallet, current_user.id))
+    cursor.execute("""SELECT e.id, e.title, e.amount, e.transaction_datetime, ec.name as subcategory, (SELECT name FROM expense_categories WHERE ec.parent_id=id) as category FROM expenses e, expense_categories ec WHERE e.category_id=ec.id AND ec.parent_id IS NOT NULL AND e.wallet_id={} AND e.user_id={} ORDER BY e.transaction_datetime DESC;""".format(current_user.get_active_wallet(), int(current_user.id)))
     _expenses = cursor.fetchall()
 
     return render_template("index.html", expenses=_expenses, wallets=_wallets, wallet=_wallet)
@@ -53,7 +54,7 @@ def new():
             if _date != '' and _time != '' and _amount != '' and _title != '' and _wallet != '' and _category != '' and len(_date) == 8:
                 _date = _date[:4] + '-' + _date[4:6] + '-' + _date[6:]
                 _datetime = datetime.combine(date.fromisoformat(_date), time.fromisoformat(_time))
-                cursor.execute("""INSERT INTO expenses (transaction_datetime, amount, title, wallet_id, category_id, user_id) VALUES ("{}", {}, "{}", {}, {}, {});""".format(_datetime, _amount, _title, int(_wallet), int(_category), current_user.id))
+                cursor.execute("""INSERT INTO expenses (transaction_datetime, amount, title, wallet_id, category_id, user_id) VALUES ("{}", {}, "{}", {}, {}, {});""".format(_datetime, _amount, _title, int(_wallet), int(_category), int(current_user.id)))
                 cursor.execute("""UPDATE wallets SET amount=amount-{} WHERE id={}""".format(_amount, int(_wallet)))
                 db.commit()
                 
@@ -64,14 +65,14 @@ def new():
             flash("Some fields are empty boii")
 
     
-    cursor.execute("""SELECT id, name FROM expense_categories WHERE parent_id IS NULL AND user_id={};""".format(current_user.id))
+    cursor.execute("""SELECT id, name FROM expense_categories WHERE parent_id IS NULL AND user_id={};""".format(int(current_user.id)))
     _categories = cursor.fetchall()
     _subcategories = []
     for ele in _categories:
-        cursor.execute("""SELECT id, name FROM expense_categories WHERE parent_id IS NOT NULL AND parent_id={} AND user_id={};""".format(ele[0], current_user.id))
+        cursor.execute("""SELECT id, name FROM expense_categories WHERE parent_id IS NOT NULL AND parent_id={} AND user_id={};""".format(ele[0], int(current_user.id)))
         _subcategories.append(cursor.fetchall())
     
-    cursor.execute("""SELECT id, name FROM wallets WHERE user_id={};""".format(current_user.id))
+    cursor.execute("""SELECT id, name FROM wallets WHERE user_id={};""".format(int(current_user.id)))
     _wallets = cursor.fetchall()
 
     return render_template("new.html", categories=_categories, subcategories=_subcategories, wallets=_wallets)
@@ -85,7 +86,7 @@ def update():
     if request.method == 'POST' and _expense_id.isdecimal():
         cursor.execute("""SELECT user_id FROM expenses WHERE id={}""".format(_expense_id))
         user_id = cursor.fetchone()[0]
-        if user_id == current_user.id:
+        if user_id == int(current_user.id):
             _title = request.form.get('title')
             _title = sql_injection_replace(_title)
             _wallet = request.form.get('wallet')
@@ -103,7 +104,7 @@ def update():
                 _datetime = datetime.combine(date.fromisoformat(_date), time.fromisoformat(_time))
                 cursor.execute("""UPDATE wallets SET amount=amount+(SELECT amount FROM expenses WHERE id={}) WHERE id={}""".format(_expense_id, int(_wallet)))
                 cursor.execute("""DELETE FROM expenses WHERE id={}""".format(_expense_id))
-                cursor.execute("""INSERT INTO expenses (transaction_datetime, amount, title, wallet_id, category_id, user_id) VALUES ("{}", {}, "{}", {}, {}, {});""".format(_datetime, _amount, _title, int(_wallet), int(_category), current_user.id))
+                cursor.execute("""INSERT INTO expenses (transaction_datetime, amount, title, wallet_id, category_id, user_id) VALUES ("{}", {}, "{}", {}, {}, {});""".format(_datetime, _amount, _title, int(_wallet), int(_category), int(current_user.id)))
                 cursor.execute("""UPDATE wallets SET amount=amount-{} WHERE id={}""".format(_amount, int(_wallet)))
                 db.commit()
             
@@ -112,20 +113,20 @@ def update():
             else:
                 flash("Some fields are empty boii")
         
-    cursor.execute("""SELECT id, name FROM expense_categories WHERE parent_id IS NULL AND user_id={};""".format(current_user.id))
+    cursor.execute("""SELECT id, name FROM expense_categories WHERE parent_id IS NULL AND user_id={};""".format(int(current_user.id)))
     _categories = cursor.fetchall()
     _subcategories = []
     for ele in _categories:
-        cursor.execute("""SELECT id, name FROM expense_categories WHERE parent_id IS NOT NULL AND parent_id={} AND user_id={};""".format(ele[0], current_user.id))
+        cursor.execute("""SELECT id, name FROM expense_categories WHERE parent_id IS NOT NULL AND parent_id={} AND user_id={};""".format(ele[0], int(current_user.id)))
         _subcategories.append(cursor.fetchall())
         
-    cursor.execute("""SELECT id, name FROM wallets WHERE user_id={};""".format(current_user.id))
+    cursor.execute("""SELECT id, name FROM wallets WHERE user_id={};""".format(int(current_user.id)))
     _wallets = cursor.fetchall()
 
     if _expense_id.isdecimal():
         cursor.execute("""SELECT id, title, transaction_datetime, amount, wallet_id, category_id, user_id FROM expenses WHERE id={}""".format(_expense_id))
         _fetched_data = cursor.fetchone()
-        if current_user.id == _fetched_data[6]:
+        if int(current_user.id) == _fetched_data[6]:
             _id = _fetched_data[0]
             _title = _fetched_data[1]
             _tansaction_datetime = _fetched_data[2]
@@ -143,17 +144,17 @@ def update():
 @login_required
 def settings():
     cursor = db.cursor()
-    cursor.execute("""SELECT id, name, amount, currency FROM wallets WHERE user_id={};""".format(current_user.id))
+    cursor.execute("""SELECT id, name, amount, currency FROM wallets WHERE user_id={};""".format(int(current_user.id)))
     _wallets = cursor.fetchall()
 
-    cursor.execute("""SELECT id, name FROM expense_categories WHERE parent_id IS NULL AND user_id={};""".format(current_user.id))
+    cursor.execute("""SELECT id, name FROM expense_categories WHERE parent_id IS NULL AND user_id={};""".format(int(current_user.id)))
     _categories = cursor.fetchall()
     _subcategories = []
     for ele in _categories:
-        cursor.execute("""SELECT id, name FROM expense_categories WHERE parent_id IS NOT NULL AND parent_id={} AND user_id={};""".format(ele[0], current_user.id))
+        cursor.execute("""SELECT id, name FROM expense_categories WHERE parent_id IS NOT NULL AND parent_id={} AND user_id={};""".format(ele[0], int(current_user.id)))
         _subcategories.append(cursor.fetchall())
     
-    cursor.execute("""SELECT email FROM users WHERE id={}""".format(current_user.id))
+    cursor.execute("""SELECT email FROM users WHERE id={}""".format(int(current_user.id)))
     _email = cursor.fetchone()
 
     return render_template('settings.html', wallets=_wallets, categories=_categories, subcategories=_subcategories, email=_email)
@@ -179,7 +180,7 @@ def charts():
     cursor.execute("""SELECT id, name FROM expense_categories WHERE parent_id IS NOT NULL""")
     _categories = cursor.fetchall()
 
-    cursor.execute("""SELECT transaction_datetime, amount, category_id FROM expenses WHERE wallet_id={} ORDER BY transaction_datetime DESC""".format(current_user.active_wallet))
+    cursor.execute("""SELECT transaction_datetime, amount, category_id FROM expenses WHERE wallet_id={} ORDER BY transaction_datetime DESC""".format(current_user.get_active_wallet()))
     fetched_data = cursor.fetchall()
 
     selected_category = request.form.get('selected-category')
