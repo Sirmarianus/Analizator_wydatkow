@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 <body class="charts-body">
     <header class="header">
-        <a href="index.html">
+        <a href="/">
             <div class="header-logo">
                 WYDATKI
             </div>
@@ -29,41 +29,21 @@
             </form>
         </div>
 
-        <a href="settings.html">
+        <a href="/settings">
             <div class="header-settings">
                 Ustawienia
             </div>
         </a>
         
-        <a href="signin.html">
+        <a href="/logout">
             <div class="header-logout">
                 Wyloguj
             </div>
         </a>
     </header>
-
-    <main class="charts-main">
-        <div class="chart-container1 nav-container">
+        <div class="chart-container nav-container">
             <div class="chart-header">
-                <div class="chart-button-left chart-button">
-                    ←
-                </div>
-                <div class="chart-title settings-category-text">
-                    Saldo konta
-                </div>
-                <div class="chart-button-right chart-button">
-                    →
-                </div>
-            </div>
-
-            <div class="chart">
-                <canvas id="chart-balance"></canvas>
-            </div>
-        </div>
-
-        <div class="chart-container2 nav-container">
-            <div class="chart-header">
-                <div class="chart-button-left chart-button">
+                <div class="chart-button-left chart-button" href="charts?month_number={{month-1}}&year_number={{year}}">
                     ←
                 </div>
                 <div class="nav-keyvalue chart-title">
@@ -71,82 +51,45 @@
                         Według kategorii:
                     </div>
                     <div class="nav-value">
-                        <select class="header-wallet new-list">
-                            <option>Pierwsza</option>
-                            <option>Druga</option>
+                        <select class="header-wallet new-list" name="selected-category" onchange="this.form.submit()">
+                            <option value="" disabled selected hidden>Kategoria</option>
+                            <option value="0">Wszystkie</option>
+                        {% for category in categories %}
+                            <option value="{{category[0]}}">{{category[1]}}</option>
+                        {% endfor %}
                         </select>
                     </div>
                 </div>
-                <div class="chart-button-right chart-button">
+                <div class="chart-button-right chart-button" href="charts?month_number={{month+1}}&year_number={{year}}">
                     →
                 </div>
             </div>
 
             <div class="chart">
-                <canvas id="chart-category"></canvas>
+                <canvas id="chart"></canvas>
             </div>
         </div>
-    </main>
+
+    <script>
+        var ctx = document.getElementById("chart").getContext("2d");
+        var lineChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: {{ x | safe }},
+                datasets: [
+                    {
+                    label: "Wykres",
+                    data: {{ y | safe }},
+                    fill: false,
+                    borderColor: "rgb(75,192,192)",
+                    lineTension: 0.1
+                    }
+                ]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
 </body>
-
-<script>
-    const labels = [
-      'Pon',
-      'Wt',
-      'Śr',
-      'Czw',
-      'Pt',
-      'Sob',
-      'Nie',
-    ];
-  
-    const data1 = {
-        labels: labels,
-        datasets: [{
-            label: 'Saldo konta',
-            backgroundColor: 'rgb(255, 255, 255)',
-            borderColor: 'rgb(244, 101, 36)',
-            data: [0, 10, 5, 2, 20, 30, 45],
-        }]
-    };
-  
-    const data2 = {
-        labels: labels,
-        datasets: [{
-        label: 'Kategoria',
-        backgroundColor: 'rgb(255, 255, 255)',
-        borderColor: 'rgb(244, 101, 36)',
-        data: [1, 3, 2, 2, 6, 4, 5],
-        }]
-    };
-  
-    const config1 = {
-      type: 'line',
-      data: data1,
-      options: {
-        responsive: true,
-        maintainAspectRatio: false
-      }
-    };
-
-    const config2 = {
-      type: 'line',
-      data: data2,
-      options: {
-        responsive: true,
-        maintainAspectRatio: false
-      }
-    };
-
-    const balance = new Chart(
-        document.getElementById('chart-balance'),
-        config1
-    );
-
-    const category = new Chart(
-        document.getElementById('chart-category'),
-        config2
-    );
-
-  </script>
 </html>

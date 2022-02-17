@@ -1,7 +1,9 @@
 from flask import Blueprint, redirect, render_template, request, flash, url_for
+from numpy import zeros
 from . import db
 from .data import data
 from datetime import datetime, date, time
+from calendar import monthrange
 
 
 views = Blueprint('views', __name__)
@@ -167,3 +169,50 @@ def settings():
     
     else:
         return redirect(url_for('auth.login'))
+
+
+@views.route('/charts', methods=['GET', 'POST'])
+def charts():
+    _data = data.instance()
+    if not _data.is_logged():
+        return redirect(url_for('auth.login'))
+    else:
+        year_number = int(datetime.today().strftime('%Y'))
+        month_number = int(datetime.today().strftime('%m'))
+        if request.method == 'POST':
+            temp_month = request.args.get('month_number')
+            temp_year = request.args.get('year_number')
+            if temp_month.isdecimal() and temp_year.isdecimal():
+                year_number = temp_year
+                month_number = temp_month
+
+        no_days = monthrange(year_number, month_number)[1]
+        x = list(range(1, no_days+1))
+        y = list(zeros(no_days, dtype=int))
+
+        cursor = db.cursor()
+        cursor.execute("""SELECT id, name FROM expense_categories WHERE parent_id IS NOT NULL""")
+        _categories = cursor.fetchall()
+
+        cursor.execute("""SELECT transaction_datetime, amount, category_id FROM expenses WHERE wallet_id={} ORDER BY transaction_datetime DESC""".format(_data._active_wallet))
+        fetched_data = cursor.fetchall()
+
+        selected_category = request.form.get('selected-category')
+        if selected_category is not None:
+            selected_category = int(selected_category)
+            for row in fetched_data:
+                temp = date.isoformat(datetime.date(row[0]))
+                year = int(temp[:4])
+                month = int(temp[5:7])
+                category = int(row[2])
+                if year == year_number and month == month_number:
+                    if selected_category == 0 or category == selected_category:
+                        day = int(temp[8:])
+                        amount = int(row[1])
+                        y[day-1] += amount
+        print(x)
+        print(y)
+        print(len(y))
+        print(len(x))
+
+        return render_template('charts.html', x=x, y=y, categories=_categories, month=month_number, year=year_number)
