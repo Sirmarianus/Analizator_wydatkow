@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+    <title>Wydatki - Wykresy</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Analiza i prezentacja codziennych wydatków">
+    <meta name="author" content="Marek Kwak, Piotr Węgrzyn">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body class="charts-body">
+    <header class="header">
+        <a href="/">
+            <div class="header-logo">
+                WYDATKI
+            </div>
+        </a>
+
+        <div class="header-subdomain">
+            <form action="/charts" method="POST">
+                <select name="wallet" class="header-wallet" onchange="this.form.submit()">
+                    <option value="" disabled selected hidden>Zmień portfel:</option>
+                {% for wallet in wallets %}
+                    <option value="{{ wallet[0] }}">{{ wallet[1] }}</option>
+                {% endfor %}
+                </select>
+            </form>
+        </div>
+
+        <a href="/settings">
+            <div class="header-settings">
+                Ustawienia
+            </div>
+        </a>
+        
+        <a href="/logout">
+            <div class="header-logout">
+                Wyloguj
+            </div>
+        </a>
+    </header>
+        <div class="chart-container nav-container">
+            <div class="chart-header">
+                <a href="/charts?month_number={{month-1}}&year_number={{year}}">
+                    <div class="chart-button-left chart-button">
+                        ←
+                    </div>
+                </a>
+                <div class="nav-keyvalue chart-title">
+                    <div class="nav-key">
+                        {{ wallet[0] }}
+                    </div>
+                    <div class="nav-value">
+                        <select class="header-wallet new-list" name="selected-category" onchange="this.form.submit()">
+                            <option value="" disabled selected hidden>Kategoria</option>
+                            <option value="0">Wszystkie</option>
+                        {% for category in categories %}
+                            <option value="{{category[0]}}">{{category[1]}}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <a href="/charts?month_number={{month+1}}&year_number={{year}}">
+                    <div class="chart-button-right chart-button">
+                        →
+                    </div>
+                </a>
+            </div>
+
+            <div class="chart">
+                <canvas id="chart"></canvas>
+            </div>
+        </div>
+
+    <script>
+        var ctx = document.getElementById("chart").getContext("2d");
+        var lineChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: {{ x | safe }},
+                datasets: [
+                    {
+                    label: "Wykres",
+                    data: {{ y | safe }},
+                    fill: false,
+                    borderColor: "rgb(75,192,192)",
+                    lineTension: 0.1
+                    }
+                ]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+</body>
+</html>
