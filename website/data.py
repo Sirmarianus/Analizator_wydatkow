@@ -1,33 +1,14 @@
-class data(object):
-    _instance = None
-    
-    @classmethod
-    def instance(cls):
-        if cls._instance is None:
-            cls._instance = cls.__new__(cls)
-            cls._id = 0
-            cls._email = ''
-            cls._is_logged = False
-            cls._active_wallet = 0
-        return cls._instance
-
-    def is_logged(self):
-        return self._is_logged
+from flask_login import UserMixin
 
 
-    def login(self, id, email):
-        self._id = id
-        self._email = email
-        self._is_logged = True
+class User(UserMixin):
+    def __init__(self, id, active_wallet):
+        self.id = id
+        self.active_wallet = active_wallet
 
-    def logout(self):
-            self._id = 0
-            self._email = ''
-            self._is_logged = False
-            self._active_wallet = 0
 
-    def sql_injection_replace(self, word):
-        disallowed_chars = "\'\"-!\b\n\r\t\\\%\0"
-        for char in disallowed_chars:
-            word = word.replace(char, '')
-        return word
+def sql_injection_replace(word):
+    disallowed_chars = "\'\"-!\b\n\r\t\\\%\0"
+    for char in disallowed_chars:
+        word = word.replace(char, '')
+    return word

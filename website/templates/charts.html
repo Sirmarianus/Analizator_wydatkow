@@ -43,9 +43,11 @@
     </header>
         <div class="chart-container nav-container">
             <div class="chart-header">
-                <div class="chart-button-left chart-button" href="charts?month_number={{month-1}}&year_number={{year}}">
-                    ←
-                </div>
+                <a href="/charts?month_number={{month-1}}&year_number={{year}}">
+                    <div class="chart-button-left chart-button">
+                        ←
+                    </div>
+                </a>
                 <div class="nav-keyvalue chart-title">
                     <div class="nav-key">
                         Według kategorii:
@@ -60,9 +62,11 @@
                         </select>
                     </div>
                 </div>
-                <div class="chart-button-right chart-button" href="charts?month_number={{month+1}}&year_number={{year}}">
-                    →
-                </div>
+                <a href="/charts?month_number={{month+1}}&year_number={{year}}">
+                    <div class="chart-button-right chart-button">
+                        →
+                    </div>
+                </a>
             </div>
 
             <div class="chart">
