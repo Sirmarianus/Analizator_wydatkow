@@ -55,13 +55,15 @@
                         {{ wallet[0] }}
                     </div>
                     <div class="nav-value">
-                        <select class="header-wallet new-list" name="selected-category" onchange="this.form.submit()">
-                            <option value="" disabled selected hidden>Kategoria</option>
-                            <option value="0">Wszystkie</option>
-                        {% for category in categories %}
-                            <option value="{{category[0]}}">{{category[1]}}</option>
-                        {% endfor %}
-                        </select>
+                        <form action="/charts" method="POST">
+                            <select class="header-wallet new-list" name="selected-category" onchange="this.form.submit()">
+                                <option value="" disabled selected hidden>Kategoria</option>
+                                <option value="0">Wszystkie</option>
+                            {% for category in categories %}
+                                <option value="{{category[0]}}">{{category[1]}}</option>
+                            {% endfor %}
+                            </select>
+                        </form>
                     </div>
                 </div>
                 <a href="/charts?month_number={{month+1}}&year_number={{year}}">

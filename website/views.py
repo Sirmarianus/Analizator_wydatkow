@@ -168,19 +168,25 @@ def settings():
 @login_required
 def charts():
     cursor = db.cursor()
-    year_number = int(datetime.today().strftime('%Y'))
-    month_number = int(datetime.today().strftime('%m'))
     if request.method == 'POST':
+
+        month_number = request.form.get('month_number')
+        year_number = request.form.get('year_number')
+        category_id = request.form.get('selected-category')
         wallet = request.form.get('wallet')
-        if wallet.isdecimal():
+
+        if month_number is None or not month_number.isdecimal():
+            month_number = int(datetime.today().strftime('%m'))
+
+        if year_number is None or not year_number.isdecimal():   
+            year_number = int(datetime.today().strftime('%Y'))
+
+        if wallet is not None and wallet.isdecimal():
             cursor.execute("""UPDATE users SET active_wallet={} WHERE id={}""".format(wallet, int(current_user.id)))
             db.commit()
-    temp_month = request.args.get('month_number')
-    temp_year = request.args.get('year_number')
-    if temp_month is not None and temp_year is not None and temp_month.isdecimal() and temp_year.isdecimal():
-        year_number = temp_year
-        month_number = temp_month
 
+        if category_id is not None and category_id.isdecimal():
+            current_user.category_id = category_id
     no_days = monthrange(year_number, month_number)[1]
     x = list(range(1, no_days+1))
     y = list(zeros(no_days, dtype=int))
